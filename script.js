@@ -54,6 +54,30 @@ navigator.geolocation.getCurrentPosition(gotMyLocation,failed);
 })
 //------------------------END--------------------------------------
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //-----------------------------Search Pe EventListener---------------------
 
 search.addEventListener("click" ,(e)=>{
@@ -64,5 +88,5 @@ search.addEventListener("click" ,(e)=>{
  else{
   Search_data_show(place);
  }
-  
+
 })
