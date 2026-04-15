@@ -1,0 +1,77 @@
+const mybtn = document.querySelector("#myLocation");
+const searchbtn = document.querySelector("#Search");
+
+const inputBox = document.querySelector(".input-box");
+const resultBox = document.querySelector(".result");
+
+// create input once
+const inpt = document.createElement("input");
+inpt.type = "text";
+inpt.placeholder = "Enter your location";
+
+// ---------------- API FUNCTION ----------------
+
+async function showdata(query) {
+  const res = await fetch(
+    `https://api.weatherapi.com/v1/forecast.json?key=b04e686561e445128e5193221261304&q=30.7216,76.6504&days=1&aqi=no&alerts=no`
+  );
+  return res.json();
+}
+
+// ---------------- DISPLAY ----------------
+
+function display(data) {
+  resultBox.innerHTML = "";
+
+  if (!data || data.error) {
+    resultBox.innerHTML = "❌ Location not found";
+    return;
+  }
+
+  const h = document.createElement("div");
+
+  h.innerHTML = `
+    <h2>${data.location.name}, ${data.location.country}</h2>
+    <p>🌡️ ${data.current.temp_c}°C</p>
+    <p>🌤️ ${data.current.condition.text}</p>
+  `;
+
+  resultBox.appendChild(h);
+}
+
+// ---------------- LOCATION ----------------
+
+function gotLocation(position) {
+  const lat = position.coords.latitude;
+  const lon = position.coords.longitude;
+
+  showdata(`${lat},${lon}`).then(display);
+}
+
+function failedlocation() {
+  resultBox.innerHTML = "⚠️ Unable to get location";
+}
+
+// ---------------- EVENTS ----------------
+
+// my location
+mybtn.addEventListener("click", () => {
+  navigator.geolocation.getCurrentPosition(gotLocation, failedlocation);
+});
+
+// search button
+searchbtn.addEventListener("click", () => {
+  inputBox.innerHTML = "";
+  inputBox.appendChild(inpt);
+  inpt.focus();
+});
+
+// enter key search
+inpt.addEventListener("keypress", (e) => {
+  if (e.key === "Enter") {
+    const city = inpt.value.trim();
+    if (!city) return;
+
+    showdata(city).then(display);
+  }
+});
