@@ -61,5 +61,8 @@ search.addEventListener("click" ,(e)=>{
  if(place===""){
   alert(" Input Was Empty Enter Something..")
  }
+ else{
+  Search_data_show(place);
+ }
   
 })
