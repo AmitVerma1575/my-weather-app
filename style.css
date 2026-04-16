@@ -91,15 +91,11 @@ input[type="text"]:focus {
 
 /* Weather hidden initially */
 .weather {
-  
+
     margin-top: 10px;
     animation: fadeIn 0.4s ease-in-out;
 }
 
-/* Show weather */
-#toggle:checked ~ .weather {
-    display: block;
-}
 
 /* Weather content */
 .city {
